@@ -1,4 +1,3 @@
-
 package com.example.myapplication
 
 import NotesApiService
@@ -15,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.api.Note
@@ -79,122 +79,51 @@ class MainActivity : ComponentActivity() {
                     Spacer(modifier = Modifier.height(12.dp))
 
                     errorMessage?.let {
-                        Text(text = it, color = Color.Red)
+                        Text(text = it, color = Color.Red, textAlign = TextAlign.Right)
                     }
 
-//                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-//                        items(notes) { note ->
-//                            Row(
-//                                modifier = Modifier.fillMaxWidth().padding(8.dp),
-//                                verticalAlignment = Alignment.CenterVertically
-//                            ) {
-//                                Column {
-//                                    Text(text = note.title)
-//                                    Text(text = note.content)
-
-                                    LazyColumn(modifier = Modifier.fillMaxSize()) {
-
-                                        items(notes) { note ->
-
-                                            NoteItem(note)
-
-                                        }
-
-                                    }
-
-                                }
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-
-                @Composable
-
-                fun NoteItem(note: Note) {
-
-                    Card(
-
-                        modifier = Modifier
-
-                            .fillMaxWidth()
-
-                            .padding(vertical = 8.dp)
-
-                            .clickable { /* Handle click */ },
-
-
-
-                        shape = MaterialTheme.shapes.medium
-
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.End
                     ) {
-
-                        Column(
-
-                            modifier = Modifier
-
-                                .padding(16.dp)
-
-                                .background(Color.White)
-
-                        ) {
-
-                            Text(
-
-                                text = note.title,
-
-                                style = MaterialTheme.typography.titleLarge,
-
-                                color = Color(0xFF37474F) // Dark text color
-
-                            )
-
-                            Spacer(modifier = Modifier.height(4.dp))
-
-                            Text(
-
-                                text = note.content,
-
-                                style = MaterialTheme.typography.bodyMedium,
-
-                                color = Color(0xFF757575) // Gray text color
-
-                            )
-
-
-
-
-
+                        items(notes) { note ->
+                            NoteItem(note)
                         }
-
                     }
-
                 }
+            }
+        }
+    }
+}
 
-
-                @Preview(showBackground = true)
-
-                @Composable
-
-                fun PreviewNoteItem() {
-
-                    MyApplicationTheme {
-
-                        NoteItem(Note("Sample Title", "This is a sample content for the note.", "2023-10-01"))
-
-                    }
-
-                }
-
-
-
-
-
-
-
-
-
+@Composable
+fun NoteItem(note: Note) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .clickable { /* Handle click */ },
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(containerColor = Color(0xFFE3F2FD))
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .background(Color.White)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.End
+        ) {
+            Text(
+                text = note.title,
+                style = MaterialTheme.typography.titleLarge,
+                color = Color(0xFF37474F),
+                textAlign = TextAlign.Right
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = note.content,
+                style = MaterialTheme.typography.titleLarge
+            )
+        }
+    }
+}
